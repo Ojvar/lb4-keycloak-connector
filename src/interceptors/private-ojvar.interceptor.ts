@@ -17,6 +17,7 @@ export function protect(roles: string) {
 
     const req = await invocationCtx.get(RestBindings.Http.REQUEST);
     const resp = await invocationCtx.get(RestBindings.Http.RESPONSE);
+    console.log(roles);
     return keycloak.protect(roles)(req, resp, next);
   };
 }

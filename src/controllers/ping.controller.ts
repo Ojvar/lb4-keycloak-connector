@@ -44,7 +44,7 @@ export class PingController {
 
   // Map to `GET /ping`
   // @intercept(PrivateOjvarInterceptor.BINDING_KEY)
-  @intercept(protect('realm.myrole'))
+  @intercept(protect('realm:myrole'))
   @get('/ping')
   @response(200, PING_RESPONSE)
   ping(): object {
