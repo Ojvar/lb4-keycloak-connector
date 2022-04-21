@@ -8,7 +8,6 @@ import {
   RestBindings,
 } from '@loopback/rest';
 import {protect} from '../interceptors';
-import {MorganInterceptorProvider} from '../interceptors/morgan.interceptor';
 
 /* Create our own factory */
 // const morganFactory = (
@@ -46,10 +45,9 @@ const PING_RESPONSE: ResponseObject = {
 export class PingController {
   constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
 
-  @intercept(MorganInterceptorProvider.BINDING_KEY)
-  @intercept(protect('realm:myrole'))
   @get('/ping')
   @response(200, PING_RESPONSE)
+  @intercept(protect('realm:myrole'))
   async ping(): Promise<object> {
     // Reply with a greeting, the current time, the url, and request headers
     return {

@@ -20,7 +20,7 @@ export function protect(roles: string) {
     const res = invocationCtx.getSync(RestBindings.Http.RESPONSE);
 
     return new Promise((resolve, reject) => {
-      keycloak.protect(roles)(req, res, () => {
+      keycloak.protect(roles)(req, res, function () {
         resolve(next());
       });
     });

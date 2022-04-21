@@ -8,8 +8,7 @@ import {
   Provider,
 } from '@loopback/core';
 import KeycloakConnect from 'keycloak-connect';
-
-export type KeycloakConnectService = unknown;
+export type KeycloakConnectService = KeycloakConnect.Keycloak;
 
 @injectable({scope: BindingScope.SINGLETON})
 export class KeycloakConnectServiceProvider
