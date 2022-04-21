@@ -11,13 +11,15 @@ export function protect(roles: string) {
     invocationCtx: InvocationContext,
     next: () => ValueOrPromise<InvocationResult>,
   ) => {
-    const keycloak = await invocationCtx.get<KeycloakConnect.Keycloak>(
-      'services.Keycloak',
-    );
+    const keycloak: KeycloakConnect.Keycloak =
+      await invocationCtx.get<KeycloakConnect.Keycloak>(
+        'services.KeycloakConnectService',
+      );
 
     const req = await invocationCtx.get(RestBindings.Http.REQUEST);
     const resp = await invocationCtx.get(RestBindings.Http.RESPONSE);
     console.log(roles);
+
     return keycloak.protect(roles)(req, resp, next);
   };
 }

@@ -1,9 +1,8 @@
 {
   "realm": "myrealm",
-  "bearer-only": true,
   "auth-server-url": "http://localhost:8080/auth/",
   "ssl-required": "external",
-  "resource": "oauth-backend",
-  "confidential-port": 0,
-  "verify-token-audience": true
+  "resource": "oauth-playground",
+  "public-client": true,
+  "confidential-port": 0
 }

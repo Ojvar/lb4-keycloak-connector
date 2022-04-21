@@ -1,1 +1,1 @@
-export * from './keycloak.service';
+export * from './keycloak-connect-service.service';
