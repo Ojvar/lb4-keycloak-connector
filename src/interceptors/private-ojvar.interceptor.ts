@@ -7,19 +7,22 @@ import {RestBindings} from '@loopback/rest';
 import KeycloakConnect from 'keycloak-connect';
 
 export function protect(roles: string) {
-  return async (
+  return (
     invocationCtx: InvocationContext,
     next: () => ValueOrPromise<InvocationResult>,
   ) => {
     const keycloak: KeycloakConnect.Keycloak =
-      await invocationCtx.get<KeycloakConnect.Keycloak>(
+      invocationCtx.getSync<KeycloakConnect.Keycloak>(
         'services.KeycloakConnectService',
       );
 
-    const req = await invocationCtx.get(RestBindings.Http.REQUEST);
-    const resp = await invocationCtx.get(RestBindings.Http.RESPONSE);
-    console.log(roles);
+    const req = invocationCtx.getSync(RestBindings.Http.REQUEST);
+    const res = invocationCtx.getSync(RestBindings.Http.RESPONSE);
 
-    return keycloak.protect(roles)(req, resp, next);
+    return new Promise((resolve, reject) => {
+      keycloak.protect(roles)(req, res, () => {
+        resolve(next());
+      });
+    });
   };
 }

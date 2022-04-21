@@ -1,2 +1,2 @@
-export * from './ojvar.interceptor';
+export * from './morgan.interceptor';
 export * from './private-ojvar.interceptor';

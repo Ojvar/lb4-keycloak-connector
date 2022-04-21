@@ -8,10 +8,17 @@ import {
   RestBindings,
 } from '@loopback/rest';
 import {protect} from '../interceptors';
+import {MorganInterceptorProvider} from '../interceptors/morgan.interceptor';
 
-/**
- * OpenAPI response for ping()
- */
+/* Create our own factory */
+// const morganFactory = (
+//   config?: morgan.Options<IncomingMessage, ServerResponse>,
+// ) => morgan('combined', config);
+// const morganInterceptor = toInterceptor(morganFactory());
+
+/* With package factory */
+// const morganInterceptor = toInterceptor(morgan('combined'));
+
 const PING_RESPONSE: ResponseObject = {
   description: 'Ping Response',
   content: {
@@ -36,25 +43,23 @@ const PING_RESPONSE: ResponseObject = {
   },
 };
 
-/**
- * A simple controller to bounce back http requests
- */
 export class PingController {
   constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
 
-  // Map to `GET /ping`
-  // @intercept(PrivateOjvarInterceptor.BINDING_KEY)
+  @intercept(MorganInterceptorProvider.BINDING_KEY)
   @intercept(protect('realm:myrole'))
   @get('/ping')
   @response(200, PING_RESPONSE)
-  ping(): object {
+  async ping(): Promise<string> {
+    return 'Ok';
+
     // Reply with a greeting, the current time, the url, and request headers
-    return {
-      greeting: 'Hello from LoopBack',
-      date: new Date(),
-      url: this.req.url,
-      headers: Object.assign({}, this.req.headers),
-    };
+    // return {
+    //   greeting: 'Hello from LoopBack',
+    //   date: new Date(),
+    //   url: this.req.url,
+    //   headers: Object.assign({}, this.req.headers),
+    // };
   }
 
   // Map to `GET /ping`
