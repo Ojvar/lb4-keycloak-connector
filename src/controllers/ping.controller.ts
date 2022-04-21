@@ -50,16 +50,14 @@ export class PingController {
   @intercept(protect('realm:myrole'))
   @get('/ping')
   @response(200, PING_RESPONSE)
-  async ping(): Promise<string> {
-    return 'Ok';
-
+  async ping(): Promise<object> {
     // Reply with a greeting, the current time, the url, and request headers
-    // return {
-    //   greeting: 'Hello from LoopBack',
-    //   date: new Date(),
-    //   url: this.req.url,
-    //   headers: Object.assign({}, this.req.headers),
-    // };
+    return {
+      greeting: 'Hello from LoopBack',
+      date: new Date(),
+      url: this.req.url,
+      headers: Object.assign({}, this.req.headers),
+    };
   }
 
   // Map to `GET /ping`

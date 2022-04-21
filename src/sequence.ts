@@ -11,10 +11,7 @@ export class MySequence extends MiddlewareSequence {
       context,
       keycloak.middleware(),
     );
-    if (finished) {
-      return;
-    }
 
-    return super.handle(context);
+    return !finished ? super.handle(context) : undefined;
   }
 }

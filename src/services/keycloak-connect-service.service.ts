@@ -23,14 +23,6 @@ export class KeycloakConnectServiceProvider
   ) {
     this._kc = new KeycloakConnect(
       {},
-      // {
-      //   realm: 'myrealm',
-      //   'bearer-only': true,
-      //   'auth-server-url': 'http://localhost:8080/auth/',
-      //   'ssl-required': 'external',
-      //   resource: 'oauth-backend',
-      //   'confidential-port': 0,
-      // },
       {
         realm: 'myrealm',
         'bearer-only': true,
