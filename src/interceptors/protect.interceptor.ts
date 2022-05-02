@@ -5,6 +5,7 @@ import {
 } from '@loopback/core';
 import {RestBindings} from '@loopback/rest';
 import KeycloakConnect from 'keycloak-connect';
+import {KEYCLOAK_CONNECTOR_SERVICE} from '../keys';
 
 export function protect(roles: string) {
   return (
@@ -13,7 +14,7 @@ export function protect(roles: string) {
   ) => {
     const keycloak: KeycloakConnect.Keycloak =
       invocationCtx.getSync<KeycloakConnect.Keycloak>(
-        'services.KeycloakConnectService',
+        KEYCLOAK_CONNECTOR_SERVICE,
       );
 
     const req = invocationCtx.getSync(RestBindings.Http.REQUEST);

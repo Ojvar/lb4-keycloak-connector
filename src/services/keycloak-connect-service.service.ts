@@ -7,10 +7,11 @@ import {
   injectable,
   Provider,
 } from '@loopback/core';
+import session from 'express-session';
 import KeycloakConnect from 'keycloak-connect';
 export type KeycloakConnectService = KeycloakConnect.Keycloak;
 
-@injectable({scope: BindingScope.SINGLETON})
+@injectable({scope: BindingScope.TRANSIENT})
 export class KeycloakConnectServiceProvider
   implements Provider<KeycloakConnectService>
 {
@@ -20,17 +21,8 @@ export class KeycloakConnectServiceProvider
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private app: Application,
   ) {
-    this._kc = new KeycloakConnect(
-      {},
-      {
-        realm: 'myrealm',
-        'bearer-only': true,
-        'auth-server-url': 'http://localhost:8080/auth/',
-        'ssl-required': 'external',
-        resource: 'oauth-playground2',
-        'confidential-port': 0,
-      },
-    );
+    let memoryStore = new session.MemoryStore();
+    this._kc = new KeycloakConnect({store: memoryStore});
   }
 
   value(): KeycloakConnect.Keycloak {
