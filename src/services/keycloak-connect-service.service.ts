@@ -7,11 +7,10 @@ import {
   injectable,
   Provider,
 } from '@loopback/core';
-import session from 'express-session';
 import KeycloakConnect from 'keycloak-connect';
 export type KeycloakConnectService = KeycloakConnect.Keycloak;
 
-@injectable({scope: BindingScope.TRANSIENT})
+@injectable({scope: BindingScope.SINGLETON})
 export class KeycloakConnectServiceProvider
   implements Provider<KeycloakConnectService>
 {
@@ -21,8 +20,7 @@ export class KeycloakConnectServiceProvider
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private app: Application,
   ) {
-    let memoryStore = new session.MemoryStore();
-    this._kc = new KeycloakConnect({store: memoryStore});
+    this._kc = new KeycloakConnect({});
   }
 
   value(): KeycloakConnect.Keycloak {

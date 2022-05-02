@@ -47,7 +47,7 @@ export class PingController {
 
   @get('/ping')
   @response(200, PING_RESPONSE)
-  @intercept(protect('realm:myrole'))
+  @intercept(protect('realm:no-body'))
   async ping(): Promise<object> {
     // Reply with a greeting, the current time, the url, and request headers
     return {
